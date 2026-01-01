@@ -2,12 +2,24 @@ const express = require("express");
 
 const app = express();
 
-app.use("/home", (req, res) => {
-  res.send("Hello home");
+app.get("/user", (req, res) => {
+  res.send({ firstName: "Girish", lastName: "Ringat" });
 });
 
-app.use("/about", (req, res) => {
-  res.send("Hello about");
+app.post("/user", (req, res) => {
+  res.send("Data Saved Successfully");
+});
+
+app.patch("/user", (req, res) => {
+  res.send(res.send("Data update Successfully"));
+});
+
+app.delete("/user", (req, res) => {
+  res.send("Daya delete successfully");
+});
+
+app.put("/user", (req, res) => {
+  res.send("Data update save successfully");
 });
 
 app.use("/test", (req, res) => {
