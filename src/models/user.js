@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
+//https://www.npmjs.com/package/validator     (npm i validator)
 
-//https://mongoosejs.com/docs/schematypes.html   for mongoose document
+//https://mongoosejs.com/docs/schematypes.html   for mongoose document   (npm i mongoose)
 //Defining schema
 const userSchema = new mongoose.Schema(
   {
@@ -23,6 +25,11 @@ const userSchema = new mongoose.Schema(
       trim: true,
       minLength: 5,
       maxLength: 50,
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error("Invalid Email address" + value);
+        }
+      },
     },
     password: {
       type: String,
@@ -30,6 +37,11 @@ const userSchema = new mongoose.Schema(
       unique: true,
       minLength: 4,
       maxLength: 20,
+      validate(value) {
+        if (!validator.isStrongPassword(value)) {
+          throw new Error("Enter a strong password" + value);
+        }
+      },
     },
     age: {
       type: Number,
@@ -47,6 +59,11 @@ const userSchema = new mongoose.Schema(
     photoUrl: {
       type: String,
       default: "https://statinfer.com/wp-content/uploads/dummy-user.png",
+      validate(value) {
+        if (!validator.isURL(value)) {
+          throw new Error("Invalid Photo URL" + value);
+        }
+      },
     },
     about: {
       type: String,
