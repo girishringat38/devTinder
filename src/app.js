@@ -45,13 +45,11 @@ app.post("/login", async (req, res) => {
       throw new Error("Invalid Credentials");
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await user.validatePassword(password);
+
     if (isPasswordValid) {
       // Create JWT Token
-      //.................hide data inside token.......secreteKey
-      const token = await jwt.sign({ _id: user._id }, "DEV@TINDER$790", {
-        expiresIn: "1d",
-      });
+      const token = await user.getJWT();
       //console.log(token);
 
       //Add the token to cookie and send the response back to the user
@@ -91,3 +89,6 @@ connectDB()
   .catch((err) => {
     console.error("Database cannot be connected");
   });
+
+// User	   Model (Class)      DB operations
+// user	   Document (Object)	Instance logic
