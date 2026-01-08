@@ -22,8 +22,5 @@ const userAuth = async (req, res, next) => {
   } catch (err) {
     res.status(400).send("ERROR : " + err.message);
   }
-
-  //validate the Token
-  //Find the user
 };
 module.exports = { userAuth };
